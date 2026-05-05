@@ -46,52 +46,6 @@ research_domains:
     # Priority (optional, 1-10, higher = higher priority)
     priority: 5
 
-  "Medical Image Analysis":
-    keywords:
-      - "medical image"
-      - "radiology"
-      - "segmentation"
-      - "clinical"
-      - "diagnosis"
-      - "prognosis"
-      - "healthcare"
-      - "biomedical"
-      - "fundus"
-      - "dermatology"
-      - "mammography"
-      - "CT"
-      - "MRI"
-      - "X-ray"
-    arxiv_categories:
-      - "eess.IV"
-      - "cs.CV"
-      - "cs.AI"
-      - "q-bio.QM"
-    priority: 4
-
-  "Diffusion Models":
-    keywords:
-      - "diffusion"
-      - "denoising"
-      - "score-based"
-      - "DDPM"
-      - "stable diffusion"
-      - "latent diffusion"
-      - "image generation"
-      - "image synthesis"
-      - "conditional generation"
-      - "inpainting"
-      - "super-resolution"
-      - "flow matching"
-      - "SDE"
-      - "reverse problem"
-      - "optimal transport"
-    arxiv_categories:
-      - "cs.CV"
-      - "cs.LG"
-      - "eess.IV"
-    priority: 4
-
   "Multimodal & Vision-Language":
     keywords:
       - "vision-language"
