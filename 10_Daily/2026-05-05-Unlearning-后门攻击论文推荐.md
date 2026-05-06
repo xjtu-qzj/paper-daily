@@ -22,9 +22,12 @@ tags: ["llm-generated", "daily-paper-recommend"]
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2603.00436) | [Semantic Scholar](https://www.semanticscholar.org/paper/e323001f48903d3163a77dc73a1eb69227c97e69)
 - **来源**：Semantic Scholar (Hot)
-- **笔记**：--
+- **详细报告**：[[20_Research/Papers/unlearning backdoor attack/ROKA_Robust_Knowledge_Unlearning_against_Adversaries|ROKA 深度分析]]
+- **笔记**：已生成详细分析
 
 **一句话总结**：首个为遗忘过程提供知识保持理论保证的框架，提出 Neural Healing 策略——在消除遗忘数据影响的同时强化其概念邻居，有效防御间接遗忘攻击。
+
+![[threat_model_A.png|600]]
 
 **核心贡献/观点**：
 - 揭示间接遗忘攻击（无需数据操纵，仅利用知识污染扰动模型安全关键预测）
@@ -78,9 +81,12 @@ tags: ["llm-generated", "daily-paper-recommend"]
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2510.13322)
 - **来源**：arXiv (Hot)
-- **笔记**：--
+- **详细报告**：[[20_Research/Papers/unlearning backdoor attack/Injection_Attack_and_Erasure_Revocable_Backdoor_Attacks_via_Machine_Unlearning|可撤销后门 深度分析]]
+- **笔记**：已生成详细分析
 
 **一句话总结**：首个可撤销后门攻击范式——攻击达成后可主动、彻底地通过遗忘机制清除后门，不留静态分析痕迹。
+
+![[framework_page1.png|600]]
 
 **核心贡献/观点**：
 - 提出可撤销后门攻击新范式
