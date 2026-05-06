@@ -17,12 +17,12 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[20_Research/Papers/unlearning backdoor attack/ROKA_Robust_Knowledge_Unlearning_against_Adversaries|ROKA: Robust Knowledge Unlearning against Adversaries]]
+### [[论文笔记/Papers/unlearning backdoor attack/ROKA_Robust_Knowledge_Unlearning_against_Adversaries|ROKA: Robust Knowledge Unlearning against Adversaries]]
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2603.00436) | [Semantic Scholar](https://www.semanticscholar.org/paper/e323001f48903d3163a77dc73a1eb69227c97e69)
 - **来源**：Semantic Scholar (Hot)
-- **详细报告**：[[20_Research/Papers/unlearning backdoor attack/ROKA_Robust_Knowledge_Unlearning_against_Adversaries|ROKA 深度分析]]
+- **详细报告**：[[论文笔记/Papers/unlearning backdoor attack/ROKA_Robust_Knowledge_Unlearning_against_Adversaries|ROKA 深度分析]]
 - **笔记**：已生成详细分析
 
 **一句话总结**：首个为遗忘过程提供知识保持理论保证的框架，提出 Neural Healing 策略——在消除遗忘数据影响的同时强化其概念邻居，有效防御间接遗忘攻击。
@@ -76,12 +76,12 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[20_Research/Papers/unlearning backdoor attack/Injection_Attack_and_Erasure_Revocable_Backdoor_Attacks_via_Machine_Unlearning|Injection, Attack and Erasure: Revocable Backdoor Attacks via Machine Unlearning]]
+### [[论文笔记/Papers/unlearning backdoor attack/Injection_Attack_and_Erasure_Revocable_Backdoor_Attacks_via_Machine_Unlearning|Injection, Attack and Erasure: Revocable Backdoor Attacks via Machine Unlearning]]
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2510.13322)
 - **来源**：arXiv (Hot)
-- **详细报告**：[[20_Research/Papers/unlearning backdoor attack/Injection_Attack_and_Erasure_Revocable_Backdoor_Attacks_via_Machine_Unlearning|可撤销后门 深度分析]]
+- **详细报告**：[[论文笔记/Papers/unlearning backdoor attack/Injection_Attack_and_Erasure_Revocable_Backdoor_Attacks_via_Machine_Unlearning|可撤销后门 深度分析]]
 - **笔记**：已生成详细分析
 
 **一句话总结**：首个可撤销后门攻击范式——攻击达成后可主动、彻底地通过遗忘机制清除后门，不留静态分析痕迹。
