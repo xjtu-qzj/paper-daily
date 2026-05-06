@@ -17,7 +17,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[ROKA_Robust_Knowledge_Unlearning_against_Adversaries|ROKA: Robust Knowledge Unlearning against Adversaries]]
+### [[20_Research/Papers/unlearning backdoor attack/ROKA_Robust_Knowledge_Unlearning_against_Adversaries|ROKA: Robust Knowledge Unlearning against Adversaries]]
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2603.00436) | [Semantic Scholar](https://www.semanticscholar.org/paper/e323001f48903d3163a77dc73a1eb69227c97e69)
@@ -39,7 +39,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[Trap_Mitigating_Poisoning-Based_Backdoor_Attacks_by_Treating_Poison_With_Poison|Trap: Mitigating Poisoning-Based Backdoor Attacks by Treating Poison With Poison]]
+### Trap: Mitigating Poisoning-Based Backdoor Attacks by Treating Poison With Poison
 - **作者**：--
 - **机构**：--
 - **链接**：[DOI](https://doi.org/10.1109/TDSC.2025.3644371)
@@ -58,7 +58,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[BadFU_Backdoor_Federated_Learning_through_Adversarial_Machine_Unlearning|BadFU: Backdoor Federated Learning through Adversarial Machine Unlearning]]
+### BadFU: Backdoor Federated Learning through Adversarial Machine Unlearning
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2508.15541) | [Semantic Scholar](https://www.semanticscholar.org/paper/943e37f86c7c9d3f1dbb3e962ae8a4c2ecea6472)
@@ -76,7 +76,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[Injection,_Attack_and_Erasure_Revocable_Backdoor_Attacks_via_Machine_Unlearning|Injection, Attack and Erasure: Revocable Backdoor Attacks via Machine Unlearning]]
+### [[20_Research/Papers/unlearning backdoor attack/Injection_Attack_and_Erasure_Revocable_Backdoor_Attacks_via_Machine_Unlearning|Injection, Attack and Erasure: Revocable Backdoor Attacks via Machine Unlearning]]
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2510.13322)
@@ -97,7 +97,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[Illuminating_the_Black_Box_Real-Time_Monitoring_of_Backdoor_Unlearning_in_CNNs_via_Explainable_AI|Illuminating the Black Box: Real-Time Monitoring of Backdoor Unlearning in CNNs via Explainable AI]]
+### Illuminating the Black Box: Real-Time Monitoring of Backdoor Unlearning in CNNs via Explainable AI
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2511.21291)
@@ -115,7 +115,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[DarkHash_A_Data-Free_Backdoor_Attack_Against_Deep_Hashing|DarkHash: A Data-Free Backdoor Attack Against Deep Hashing]]
+### DarkHash: A Data-Free Backdoor Attack Against Deep Hashing
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2510.08094)
@@ -133,7 +133,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[BAIT_Large_Language_Model_Backdoor_Scanning_by_Inverting_Attack_Target|BAIT: Large Language Model Backdoor Scanning by Inverting Attack Target]]
+### BAIT: Large Language Model Backdoor Scanning by Inverting Attack Target
 - **作者**：--
 - **机构**：--
 - **链接**：[DOI](https://doi.org/10.1109/SP61157.2025.00103)
@@ -151,7 +151,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[IAG_Input-aware_Backdoor_Attack_on_VLM-based_Visual_Grounding|IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding]]
+### IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2508.09456)
@@ -169,7 +169,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[Step-by-Step_Reasoning_Attack_Revealing_'Erased'_Knowledge_in_Large_Language_Models|Step-by-Step Reasoning Attack: Revealing 'Erased' Knowledge in LLMs]]
+### Step-by-Step Reasoning Attack: Revealing 'Erased' Knowledge in Large Language Models
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2506.17279)
@@ -187,7 +187,7 @@ tags: ["llm-generated", "daily-paper-recommend"]
 
 ---
 
-### [[Unlearning-Enhanced_Website_Fingerprinting_Attack_Against_Backdoor_Poisoning_in_Anonymous_Networks|Unlearning-Enhanced Website Fingerprinting Attack]]
+### Unlearning-Enhanced Website Fingerprinting Attack: Against Backdoor Poisoning in Anonymous Networks
 - **作者**：--
 - **机构**：--
 - **链接**：[arXiv](https://arxiv.org/abs/2506.13563)
