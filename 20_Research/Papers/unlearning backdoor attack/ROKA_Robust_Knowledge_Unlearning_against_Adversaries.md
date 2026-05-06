@@ -70,45 +70,150 @@ The need for machine unlearning is critical for data privacy, yet existing metho
 
 ## 方法概述
 
-### 核心思想
-ROKA 的核心洞见是：遗忘不应该是"删除"操作，而应该是"重新平衡"操作。Neural Healing（神经修复）在消除目标数据影响的同时，主动强化其概念邻居，维持整体知识结构的完整性。
+### 前置知识：LRP 与 Input×Gradient
 
-### 方法框架
+ROKA 的贡献量化依赖 **Layer-wise Relevance Propagation (LRP)** 的简化形式——**Input×Gradient** 方法。核心思想：将模型输出对某个输入的敏感度反向传播到隐藏层，得到每个神经元对该输出的"贡献分数"。
 
-#### 整体架构
+对于输入 $x$ 和目标类别 $c$，隐藏层神经元 $h_i$ 的贡献定义为：
 
-![[threat_model_A.png|800]]
+$$R(h_i) = h_i \cdot \frac{\partial f_c(x)}{\partial h_i}$$
 
-> 图1：威胁模型A — 展示了间接遗忘攻击的工作机制，攻击者通过合法遗忘请求触发知识污染链式反应
+即神经元激活值与其对目标输出梯度的乘积。这回答了"哪些神经元对当前预测贡献最大"的问题。ROKA 使用此方法计算 batch 中每个样本的贡献向量，作为识别"概念邻居"的依据。
 
-**ROKA 三步框架**：
+### 理论框架：Neural Knowledge System
 
-| 步骤 | 操作 | 目的 |
-|------|------|------|
-| 1. 神经知识建模 | 将神经网络参数化为知识图谱结构 | 识别概念间的依赖关系 |
-| 2. 影响量化 | 计算遗忘目标对每个概念邻居的影响 | 精确定位污染风险 |
-| 3. 神经修复 | 消除目标影响 + 强化邻居概念 | 建设性重平衡 |
+ROKA 将深度神经网络形式化为一个**层级知识系统** $\mathcal{S}$：
 
-![[threat_model_B.png|600]]
+$$\mathcal{S} = (\mathbf{X}, \mathbf{K}, \mathcal{F})$$
 
-> 图2：威胁模型B — ROKA 的防御策略
+- $\mathbf{X}$：原始输入空间
+- $\mathbf{K}$：内部抽象知识表示空间，按层次组织为 $(\mathbf{K}_0, \mathbf{K}_1, ..., \mathbf{K}_L)$，类似 Markov 链 $\mathbf{K}_{l-1} \to \mathbf{K}_l$
+- $\mathcal{F}$：变换函数集，包括 Encode $\mathcal{E}: \mathbf{X} \to \mathbf{K}$ 和 Decode $\mathcal{D}: \mathbf{K} \to \mathbf{Y}$
 
-#### 关键创新
+#### 静态属性：Contribution（贡献度）
 
-**Neural Knowledge Systems 理论**：
-- 将神经网络形式化为知识系统，其中神经元/参数组对应概念
-- 知识污染 = 概念间依赖关系的非预期断裂
-- 提供可证明的知识保持界
+低层组件 $k_{l-1,i}$ 对高层状态 $\mathbf{K}_{l,j}$ 的**贡献度**即其条件概率：
 
-**Neural Healing 策略**：
+$$C(k_{l-1,i} \to \mathbf{K}_{l,j}) = \frac{w_{l-1,i}}{W_{l,j}} = p(k_{l-1,i}|\mathbf{K}_{l,j})$$
 
-$$\theta_{new} = \theta - \eta \cdot \nabla_\theta L_{forget} + \lambda \cdot \nabla_\theta L_{reinforce}$$
+其中 $w$ 为组件权重，$W$ 为父组总权重。
 
-其中 $L_{forget}$ 消除目标数据影响，$L_{reinforce}$ 强化概念邻居。
+#### 动态属性：Leverage（杠杆率）
 
-![[threat_model_C.png|600]]
+**Influence**（影响力）衡量整个系统熵对单个组件变化的敏感度：
 
-> 图3：威胁模型C — 完整攻防框架
+$$\text{Influence}(w_i \to \mathbf{K}_l) = -\log(W_{dest})$$
+
+**Leverage** 是影响力按其自身权重缩放后的值，量化了"小变化引发大效应"的潜力：
+
+$$\text{Leverage}(w_i \to \mathbf{K}_l) = \frac{-\log(W_{dest})}{w_i}$$
+
+Leverage 在低层基础组件上最高，随聚合层级升高而递减。这解释了为什么破坏底层共享参数会通过层级链放大，导致高层知识的灾难性崩塌。
+
+#### 知识破坏的边界条件
+
+**知识破坏（Knowledge Destruction）** 指低层组件的小扰动经高 Leverage 放大后导致高层知识集的剧烈变化。其边界由 KL 散度界定：
+
+$$D_{KL}(P(\mathbf{Y}|\mathbf{K'}_l) \ || \ P(\mathbf{Y}|\mathbf{K}_l)) \ \propto \ \text{Leverage}(w_{l-1,i} \to \mathbf{K}_l) \cdot \left| \frac{\Delta w_{l-1,i}}{w_{l-1,i}} \right|$$
+
+当此值超过阈值 $\tau$ 时，知识破坏发生。**知识污染（Knowledge Contamination）** 则是遗忘更新 $\Delta w_{shared}$ 跨越了保留知识的破坏边界：
+
+$$C \cdot \text{Leverage}(w_{shared} \to K_{retain}) \cdot \left| \frac{\Delta w_{shared}}{w_{shared}} \right| > \tau_{retain}$$
+
+这个不等式揭示了遗忘的根本困境：一个足以遗忘目标概念的更新，如果作用于共享的高 Leverage 参数，就会污染相关概念。
+
+### Neural Healing：贡献重分配
+
+![[contribution_reallocation_1__2.png|700]]
+
+> 图：贡献重分配过程 — 消除遗忘目标的贡献，按比例重分配给 sibling 组件
+
+ROKA 的核心策略是**贡献重分配（Contribution Re-allocation）**——不是简单地删除目标知识，而是将被遗忘组件的权重按比例转移给其"兄弟姐妹"组件，保证父级知识结构的总权重守恒。
+
+**三步过程**：
+
+**1. Nullification（置零）**：消除 $k_{l-1,i}$ 的贡献，产生权重赤字 $w_{l-1,i}$。
+
+**2. Identification of Siblings（兄弟识别）**：找到同层中与 $k_{l-1,i}$ 结构相关的所有组件集合 $\mathbf{S}_i$（通常共享同一父聚合节点）。
+
+**3. Proportional Re-allocation（按比重分配）**：权重赤字按各 sibling 的原贡献比例重新分配：
+
+$$W_{siblings} = \sum_{k_{l-1, k} \in \mathbf{S}_i} w_{l-1, k}$$
+
+$$\Delta w_j = w_{l-1,i} \cdot \frac{w_{l-1,j}}{W_{siblings}}$$
+
+$$w'_{l-1, j} = w_{l-1,j} + \Delta w_j$$
+
+**理论保证**：该过程**保持任意两个 sibling 之间的贡献比率不变**（Sibling Knowledge Preservation theorem），因此整体知识结构不会因遗忘而扭曲。这是首个为遗忘提供知识保持理论保证的方法。
+
+### 实际实现：随机化神经修复（Stochastic Unlearning with Neural Healing）
+
+纯理论的重分配在真实神经网络中不可行——因为单个数据点的知识分散在数百万参数中，且精确计算每个参数的贡献成本极高（接近重新训练的代价）。因此 ROKA 提出了一种**迭代随机化近似**。
+
+#### 变体1：有目标遗忘（Targeted Stochastic Unlearning）
+
+适用于遗忘目标是**明确类别标签**的场景（如"遗忘飞机类别"）。
+
+![[threat_model_C.png|700]]
+
+> 图：ROKA 完整有目标遗忘流程
+
+**算法流程**（详见 Algorithm 1）：
+
+```
+输入：模型 M, 数据集 D, 目标标签 l_target, 迭代次数 N, 修复因子 α, 学习率 η
+输出：遗忘后模型 M'
+
+For i = 1 to N:
+    1. 从 D 中采样一个 batch B
+    
+    2. 选择遗忘样本 x_forget：
+       - 计算 B 中每个样本被预测为 l_target 的概率
+       - 按概率加权采样（模型越"确信"是目标类的样本越可能被选中）
+       → 保证遗忘努力始终集中在最具代表性的样本上
+    
+    3. 识别兄弟样本 B_siblings：
+       - 用 Input×Gradient 计算 B 中每个样本的贡献向量 R
+       - 取 r_forget = R[x_forget]
+       - 在贡献空间中找 x_forget 的 k 近邻 → B_siblings
+    
+    4. 计算复合损失：
+       L_forget = CrossEntropy(M(x_forget), l_target)
+       y_pred = argmax(M(B_siblings))        # 模型对兄弟样本的当前预测
+       L_heal = CrossEntropy(M(B_siblings), y_pred)   # 自我蒸馏
+       L_unlearn = L_forget - α · L_heal
+    
+    5. 梯度上升：θ = θ + η · ∇_θ L_unlearn
+       （等价于梯度下降 -L_unlearn）
+```
+
+**损失函数设计**是 ROKA 最核心的技术：
+
+- **$L_{forget}$**：最大化遗忘样本对目标标签的损失 → 推动模型"忘记"
+- **$L_{heal}$**：最小化兄弟样本对自身预测的损失（自我蒸馏）→ 固化模型的原有行为
+- **$-\alpha \cdot L_{heal}$**：$\alpha$ 控制修复强度。足够大的 $\alpha$ 确保保留损失下降
+
+单个更新步骤同时执行遗忘和修复——梯度上升方向推远目标概念，同时拉近兄弟概念。这就是"贡献重分配"在优化空间中的具体实现。
+
+**如何理解"修复"机制**：假设遗忘 $l_{\text{target}}$=飞机。$x_{\text{forget}}$ 是一张被模型高置信度判为飞机的图。B_siblings 包含贡献向量相似的样本（可能是鸟类——共享"翅膀、天空"特征）。$L_{\text{heal}}$ 告诉模型："这些样本的预测不要改变"，从而保护鸟类分类不受遗忘飞机的连锁影响。
+
+#### 变体2：无目标遗忘（Non-Targeted Stochastic Unlearning）
+
+适用于遗忘目标**未明确标注**的场景（如"删除这组用户数据，但不知道哪些类别受影响"）。
+
+与变体1的关键差异：
+- **预计算阶段**：用初始模型为整个 $D_{forget}$ 生成伪标签 $Y_{pseudo}$ 和贡献质心 $r_{centroid}$（固定不变，防止漂移）
+- **遗忘样本选择**：每轮选 batch 中贡献向量与 $r_{centroid}$ 余弦相似度最高的样本
+- **兄弟识别**：同变体1，在贡献空间中找近邻
+- **损失函数**：同变体1，但使用伪标签而非真实标签
+
+伪标签和质心的**预计算-固定**策略是本变体的关键设计——如果每轮重新计算，遗忘目标会"漂移"，导致优化震荡。
+
+#### 理论保证
+
+ROKA 提供了 **Unlearning Trajectory Guarantee**：在每次参数更新中，只要 $\alpha$ 足够大，$L_{\text{forget}}$ 的期望增加（遗忘推进），$L_{\text{heal}}$ 的期望减少（知识保持）。这保证了模型参数始终沿着"遗忘目标 + 保护邻居"的方向移动。
+
+此外，有目标遗忘的**收敛速度远快于**无目标遗忘。原因：无目标场景中遗忘样本和兄弟样本来自同一分布，梯度高度对齐（$E[\cos(g_f, g_h)]$ 高），每次更新的有效幅度被削弱。有目标场景中二者来自不同类别，梯度近似正交，更新更高效。
 
 ## 实验结果
 
