@@ -37,4 +37,5 @@ title: 论文笔记
 
 ### Multimodal & Vision-Language
 
+- [[论文笔记/Papers/Multimodal & Vision-Language/NaViT_Patch_n_Pack_Vision_Transformer|Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution]] (8.5/10)
 - [[论文笔记/Papers/Multimodal & Vision-Language/Revisiting_Change_VQA_in_Remote_Sensing_with_Structured_and_Native_Multimodal_Qwen_Models|Revisiting Change VQA in Remote Sensing with Qwen Models]] (7.0/10)
