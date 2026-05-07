@@ -31,6 +31,10 @@ title: 论文笔记
 - [[论文笔记/Papers/Foundation Models & LLM/RefusalGuard_Geometry-Preserving_Fine-Tuning_for_Safety_in_LLMs|RefusalGuard: Geometry-Preserving Fine-Tuning for Safety in LLMs]] (7.5/10)
 - [[论文笔记/Papers/Foundation Models & LLM/Long-Context_Aware_Upcycling_A_New_Frontier_for_Hybrid_LLM_Scaling|HyLo: Long-Context Aware Upcycling for Hybrid LLM Scaling]] (7.5/10)
 
+### Agents & Autonomous Systems
+
+- [[论文笔记/Papers/Agents & Autonomous Systems/ReAct_Synergizing_Reasoning_and_Acting_in_Language_Models|ReAct: Synergizing Reasoning and Acting in Language Models]] (9.0/10)
+
 ### Multimodal & Vision-Language
 
 - [[论文笔记/Papers/Multimodal & Vision-Language/Revisiting_Change_VQA_in_Remote_Sensing_with_Structured_and_Native_Multimodal_Qwen_Models|Revisiting Change VQA in Remote Sensing with Qwen Models]] (7.0/10)
